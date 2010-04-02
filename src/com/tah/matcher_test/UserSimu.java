@@ -2,7 +2,8 @@ package com.tah.matcher_test;
 
 import org.testng.annotations.Test;
 
-import com.tah.matcher.tahmatcher;
+import com.tah.matcher.TAHmatcher;
+
 
 public class UserSimu {
   @Test
@@ -17,7 +18,7 @@ public class UserSimu {
 	  System.out.println(CRR.getCR_Info().getCR_URL());
 	  
 	// instantiate TAHmatcher and call matcher method sending CRR
-	  tahmatcher tm = new tahmatcher(Uid, Conv_Id, Conv_Title);
+	  TAHmatcher tm = new TAHmatcher(Uid, Conv_Id, Conv_Title);
 	  tm.matcher();
   }
 
