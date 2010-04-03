@@ -17,6 +17,7 @@ public class UserSimu {
 	  System.out.println(CRR.getCR_Info().getCR_Status());
 	  System.out.println(CRR.getCR_Info().getCR_URL());
 	  
+	  
 	// instantiate TAHmatcher and call matcher method sending CRR
 	  TAHmatcher tm = new TAHmatcher(Uid, Conv_Id, Conv_Title);
 	  tm.matcher();
