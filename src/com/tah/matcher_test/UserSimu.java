@@ -21,6 +21,12 @@ public class UserSimu {
 	// instantiate TAHmatcher and call matcher method sending CRR
 	  TAHmatcher tm = new TAHmatcher(Uid, Conv_Id, Conv_Title);
 	  tm.matcher();
+	  System.out.println(tm.getUserList().size());
+	  for(int i = 0; i < tm.getUserList().size(); i++){
+		  System.out.println(tm.getUserList().get(i).getInviteeName() + " " +tm.getUserList().get(i).getInviteeIMAcc());
+	  }
+	  
+	  
   }
 
 }

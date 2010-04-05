@@ -1,7 +1,6 @@
 package com.tah.matcher;
 
 import java.sql.*;
-import java.util.*;
 
 public class SQL_CON {
 
@@ -10,8 +9,9 @@ public class SQL_CON {
 	private String db_user;
 	private String db_password;
 	private String _sql;
-	
 	private Connection con;
+	private Statement sqlStatement;
+	ResultSet rs;
 	
 	public SQL_CON(String host, String database, String user, String password, String sql) throws Exception{
 		
@@ -20,9 +20,10 @@ public class SQL_CON {
 		db_user = user;
 		db_password = password;
 		_sql = sql;
- 
 		con = setCon(db_host, db_name, db_user, db_password);
-		
+		sqlStatement = con.createStatement();
+		rs = sqlStatement.executeQuery(_sql);
+	
 	}
 	public Connection getCon(){
 		return con;
@@ -55,6 +56,10 @@ public class SQL_CON {
                 throw (e);
         }
      }
+    public ResultSet getRS(){
+    	return rs;
+    }
+    /*
     public List<Invitee> exeQuery(Connection con, String sqlStatement)
     throws Exception {
     	List<Invitee> Invitees;
@@ -88,8 +93,10 @@ public class SQL_CON {
                   	System.out.println ("Error executing sql statement");
                   	throw (e);
           }
+          
 			return Invitees;
           
     } 
+    */
     
 }
