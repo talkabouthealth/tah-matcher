@@ -32,7 +32,7 @@ public class TAHmatcher {
 		CRR.setCR_Info();
 		System.out.println("The chat room stauts is " + CRR.getCR_Info().getCR_Status());
 		System.out.println("The chat room URL is " + CRR.getCR_Info().getCR_URL());
-		String [][] userData;
+		
 		
 		// if chat room created successfully, connecting to database
 		if (CRR.getCR_Info().getCR_Status() != 0){
@@ -51,6 +51,8 @@ public class TAHmatcher {
 		String db_password = "applepie";
 //		String post_author = "testIM5566@gmail.com";
 		String sql = "SELECT * FROM talkers WHERE uid <> " + UID ;
+		String [][] userData;
+		
 		// establish connection to database
 		SQL_CON SQL_Conn = new SQL_CON(db_host, db_name, db_user, db_password, sql);
 		// create a dynamic arraylist to store users info
@@ -82,11 +84,12 @@ public class TAHmatcher {
 		for (int i = 0; i < Invitees.size(); i++){
 			System.out.println(Invitees.get(i).getInviteeName() + " has IM account of " + Invitees.get(i).getInviteeIMAcc());
 		}	
-		/*
+		int numofUsers = Invitees.size();
+		userData = new String [2][numofUsers];
 		for (int k = 0; k < 2; k++){
 			for (int j = 0; j < numofUsers; j++){
 				if(k == 0){
-					userData[k][j] = UserList[j];
+					userData[k][j] = Invitees.get(j).getInviteeIMAcc();
 				}
 				else{
 					userData[k][j] = "http://www.google.com/";
@@ -94,11 +97,9 @@ public class TAHmatcher {
 			}
 			
 		}
-		//IMInterface myInterface = new IMInterface();
-		//myInterface.Broadcast(userData);
-		 * 
-		 */
-		
+		IMInterface myInterface = new IMInterface();
+		myInterface.Broadcast(userData);
+
 	}
 
 }
