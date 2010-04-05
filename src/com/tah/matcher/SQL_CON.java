@@ -21,12 +21,15 @@ public class SQL_CON {
 		db_password = password;
 		_sql = sql;
 		con = setCon(db_host, db_name, db_user, db_password);
-		sqlStatement = con.createStatement();
+		sqlStatement = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 		rs = sqlStatement.executeQuery(_sql);
 	
 	}
 	public Connection getCon(){
 		return con;
+	}
+	public Statement getStatement(){
+		return sqlStatement;
 	}
 	public String getSql(){
 		return _sql;

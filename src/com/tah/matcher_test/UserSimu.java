@@ -8,7 +8,7 @@ import com.tah.matcher.TAHmatcher;
 public class UserSimu {
   @Test
   public void UserBehaviorSimu() throws Exception {
-	  int Uid = 10;
+	  int Uid = 31;
 	  int Conv_Id = 100;
 	  String Conv_Title = "This is a test conversation";
 	  com.tah.matcher.ChatRoom_Req CRR;

@@ -33,14 +33,46 @@ public class TAHmatcher {
 		System.out.println("The chat room stauts is " + CRR.getCR_Info().getCR_Status());
 		System.out.println("The chat room URL is " + CRR.getCR_Info().getCR_URL());
 		
-		
+		updatePostCounter(UID);
 		// if chat room created successfully, connecting to database
 		if (CRR.getCR_Info().getCR_Status() != 0){
 			readUserList();
 		}
 	}
 	public List<Invitee> getUserList(){
-		return Invitees;
+		return Invitees;	
+	}	
+	private void updatePostCounter(int _uid) throws Exception{
+		System.out.println("Updating Post Counter for user " + _uid);
+		String db_host = "localhost";
+		String db_name = "talkmidb";
+		String db_user = "root";
+		String db_password = "applepie";
+		String sqlPickUpUser = "SELECT * FROM talkers WHERE uid = " + _uid;
+		
+		int _postCounter = 0;
+		SQL_CON SQL_Looking_User = new SQL_CON(db_host, db_name, db_user, db_password, sqlPickUpUser);
+		if(SQL_Looking_User.driverTest()){
+			try{
+				while(SQL_Looking_User.getRS().next()){
+					System.out.println(SQL_Looking_User.getRS().getInt("postcounter"));
+					_postCounter = SQL_Looking_User.getRS().getInt("postcounter");
+//					System.out.println("User" + _uid + " has " + _postCounter + " posts");
+					_postCounter++;	
+//					System.out.println("User" + _uid + " now has " + _postCounter + " posts");
+//					String sql_update_PC ="UPDATE talkers SET postcounter = " + _postCounter + " WHERE uid = " + _uid;
+//					System.out.println(sql_update_PC);
+					SQL_Looking_User.getRS().updateInt("postcounter", _postCounter);
+					SQL_Looking_User.getRS().updateRow();
+				}			
+			}catch(Exception e){
+				System.err.println("Error excuting sql statement...");
+			}		
+		}
+	}
+	
+
+	private void updateNotificationCounter(){
 		
 	}
 	private void readUserList() throws Exception{
@@ -49,7 +81,6 @@ public class TAHmatcher {
 		String db_name = "talkmidb";
 		String db_user = "root";
 		String db_password = "applepie";
-//		String post_author = "testIM5566@gmail.com";
 		String sql = "SELECT * FROM talkers WHERE uid <> " + UID ;
 		String [][] userData;
 		
@@ -60,24 +91,16 @@ public class TAHmatcher {
 		Invitee PPL;
 		
 		if(SQL_Conn.driverTest()){
-			try {
-//				Invitees = SQL_Conn.exeQuery(SQL_Conn.getCon(), sql);
-				try{
-			
-						while(SQL_Conn.getRS().next() && (Invitees.size() < 20)){
-							PPL = new Invitee(SQL_Conn.getRS().getObject("uname").toString(), SQL_Conn.getRS().getObject("email").toString());
-							Invitees.add(PPL);
-							System.out.println(Invitees.size());
-						}
-
-
-				}catch(Exception e){
-					System.err.println("Error excuting sql statement!");
-					throw(e);
+			try{
+				while(SQL_Conn.getRS().next() && (Invitees.size() < MAX_NUM)){
+					PPL = new Invitee(SQL_Conn.getRS().getObject("uname").toString(), SQL_Conn.getRS().getObject("email").toString());
+					Invitees.add(PPL);
 				}
-			} catch (Exception e) {
+			}catch(Exception e){
+				System.err.println("Error excuting sql statement!");
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				throw(e);
 			}
 		}
 		System.out.println("There are " + Invitees.size() + " users");
@@ -97,8 +120,8 @@ public class TAHmatcher {
 			}
 			
 		}
-		IMInterface myInterface = new IMInterface();
-		myInterface.Broadcast(userData);
+//		IMInterface myInterface = new IMInterface();
+//		myInterface.Broadcast(userData);
 
 	}
 
