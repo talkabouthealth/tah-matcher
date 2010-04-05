@@ -9,17 +9,17 @@ public class SQL_CON {
 	private String db_name;
 	private String db_user;
 	private String db_password;
-//	private String qry;
+	private String _sql;
 	
 	private Connection con;
 	
-	public SQL_CON(String host, String database, String user, String password) throws Exception{
+	public SQL_CON(String host, String database, String user, String password, String sql) throws Exception{
 		
 		db_host = host;
 		db_name = database;
 		db_user = user;
 		db_password = password;
-//		qry = "SELECT * FROM talkers WHERE email <> '" + post_author + "'";
+		_sql = sql;
  
 		con = setCon(db_host, db_name, db_user, db_password);
 		
@@ -27,7 +27,9 @@ public class SQL_CON {
 	public Connection getCon(){
 		return con;
 	}
-
+	public String getSql(){
+		return _sql;
+	}
 
 	public Connection setCon (String host, String database, String user, String password)
     throws Exception {
